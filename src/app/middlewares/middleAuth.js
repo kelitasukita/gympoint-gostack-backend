@@ -4,13 +4,13 @@ import { promisify } from 'util';
 import authConfig from '../../config/auth';
 
 export default async (req, res, next) => {
-  const autorizacaoHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-  if (!autorizacaoHeader) {
+  if (!authHeader) {
     return res.status(401).json({ error: 'Usuário não autorizado' });
   }
 
-  const [, token] = autorizacaoHeader.split(' ');
+  const [, token] = authHeader.split(' ');
 
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
