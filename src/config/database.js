@@ -3,7 +3,7 @@ module.exports = {
   host: 'localhost',
   username: 'postgres',
   password: 'docker',
-  database: 'gympoint',
+  database: 'gympoint-gostack',
   define: {
     timeStamps: true,
     underscored: true,
