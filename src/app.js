@@ -1,6 +1,6 @@
 import express from 'express';
 
-import rotas from './routes';
+import routes from './routes';
 import './database';
 
 class App {
@@ -16,7 +16,7 @@ class App {
   }
 
   routes() {
-    this.server.use(rotas);
+    this.server.use(routes);
   }
 }
 
