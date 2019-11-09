@@ -7,7 +7,7 @@ class StudentsController {
     });
 
     if (verifyStudent) {
-      return res.status(400).json({ error: 'Aluno já cadastrado' });
+      return res.status(400).json({ error: 'Student already registered' });
     }
 
     const { name, email, idade, peso, altura } = req.body;
@@ -36,14 +36,14 @@ class StudentsController {
     const student = await Student.findByPk(req.params.id);
 
     if (!student) {
-      return res.status(404).json({ error: 'Estudante não encontrado' });
+      return res.status(404).json({ error: 'Student does not exist' });
     }
 
     if (email !== student.email) {
       const verifyStudent = await Student.findOne({ where: { email } });
 
       if (verifyStudent) {
-        return res.status(401).json({ error: 'Estudante já cadastrado ' });
+        return res.status(400).json({ error: 'Student already registered' });
       }
     }
 
