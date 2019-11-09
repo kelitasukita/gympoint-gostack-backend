@@ -1,10 +1,10 @@
-import Planos from '../models/Plans';
+import Plan from '../models/Plan';
 
-class Plan {
+class PlanController {
   async store(req, res) {
     const { title, duration, price } = req.body;
 
-    const plan = await Planos.create({
+    const plan = await Plan.create({
       title,
       duration,
       price
@@ -14,13 +14,13 @@ class Plan {
   }
 
   async index(req, res) {
-    const listPlans = await Planos.findAll({});
+    const listPlans = await Plan.findAll({});
 
     return res.json(listPlans);
   }
 
   async update(req, res) {
-    const plano = await Planos.findByPk(req.params.id);
+    const plano = await Plan.findByPk(req.params.id);
 
     plano.update(req.body);
 
@@ -30,7 +30,7 @@ class Plan {
   }
 
   async delete(req, res) {
-    const plano = await Planos.findByPk(req.params.id);
+    const plano = await Plan.findByPk(req.params.id);
 
     await plano.destroy(plano);
 
@@ -38,4 +38,4 @@ class Plan {
   }
 }
 
-export default new Plan();
+export default new PlanController();

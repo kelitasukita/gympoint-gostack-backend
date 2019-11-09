@@ -3,21 +3,24 @@ import { Router } from 'express';
 import SessionController from './app/controllers/SessionController';
 import StudentsController from './app/controllers/StudentsController';
 import PlanController from './app/controllers/PlanController';
+import SubscriptionController from './app/controllers/SubscriptionController';
 
 import authMiddleware from './app/middlewares/middleAuth';
 
-const rotas = new Router();
+const routes = new Router();
 
-rotas.post('/login', SessionController.store);
+routes.post('/login', SessionController.store);
 
-rotas.use(authMiddleware);
+routes.use(authMiddleware);
 
-rotas.post('/students', StudentsController.store);
-rotas.put('/students/:id', StudentsController.updade);
+routes.post('/students', StudentsController.store);
+routes.put('/students/:id', StudentsController.updade);
 
-rotas.post('/plans', PlanController.store);
-rotas.get('/plans', PlanController.index);
-rotas.put('/plans/:id', PlanController.update);
-rotas.delete('/plans/:id', PlanController.delete);
+routes.post('/plans', PlanController.store);
+routes.get('/plans', PlanController.index);
+routes.put('/plans/:id', PlanController.update);
+routes.delete('/plans/:id', PlanController.delete);
 
-export default rotas;
+routes.post('/subscriptions', SubscriptionController.store);
+
+export default routes;
