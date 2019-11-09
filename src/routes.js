@@ -21,6 +21,15 @@ routes.get('/plans', PlanController.index);
 routes.put('/plans/:id', PlanController.update);
 routes.delete('/plans/:id', PlanController.delete);
 
-routes.post('/subscriptions', SubscriptionController.store);
+routes.post(
+  '/subscriptions',
+  SubscriptionController.store.bind(SubscriptionController)
+);
+routes.get('/subscriptions', SubscriptionController.index);
+routes.put(
+  '/subscriptions/:id',
+  SubscriptionController.update.bind(SubscriptionController)
+);
+routes.delete('/subscriptions/:id', SubscriptionController.delete);
 
 export default routes;
