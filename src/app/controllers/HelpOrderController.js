@@ -1,6 +1,10 @@
 import * as Yup from 'yup';
+import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
 import HelpOrder from '../models/HelpOrder';
 import Student from '../models/Student';
+import Mail from '../../lib/Mail';
 
 class HelpOrderController {
   async store(req, res) {
@@ -77,14 +81,34 @@ class HelpOrderController {
         .trim()
         .required()
     });
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Answer is required' });
     }
+
     const order = await HelpOrder.findByPk(req.params.order);
 
     order.answer_at = new Date();
 
     await order.update(req.body);
+
+    const student = await Student.findByPk(order.student_id);
+
+    const answerAtFormated = format(order.answer_at, 'dd/MM/yyyy', {
+      locale: pt
+    });
+
+    await Mail.sendMail({
+      to: `${student.name} <${student.email}>`,
+      subject: 'Pergunta Respondida',
+      template: 'answerHelpOrderMail',
+      context: {
+        answer: order.answer,
+        answerAtFormated,
+        question: order.question,
+        name: student.name
+      }
+    });
 
     return res.json({
       order
