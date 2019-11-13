@@ -104,8 +104,6 @@ class SubscriptionController {
       ...req.body
     });
 
-    subscription.save();
-
     return res.json({
       subscription
     });

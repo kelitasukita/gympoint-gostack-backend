@@ -5,6 +5,7 @@ import StudentsController from './app/controllers/StudentsController';
 import PlanController from './app/controllers/PlanController';
 import SubscriptionController from './app/controllers/SubscriptionController';
 import CheckinController from './app/controllers/CheckinController';
+import HelpOrderController from './app/controllers/HelpOrderController';
 
 import authMiddleware from './app/middlewares/middleAuth';
 
@@ -15,7 +16,17 @@ routes.post('/login', SessionController.store);
 routes.post('/students/:id/checkins', CheckinController.store);
 routes.get('/students/:id/checkins', CheckinController.index);
 
+routes.post('/students/:student/help-orders', HelpOrderController.store);
+routes.get('/students/:student/help-orders', HelpOrderController.index);
+routes.get(
+  '/students/:student/help-orders/unanswered',
+  HelpOrderController.unansweredOrdersByStudent
+);
+
 routes.use(authMiddleware);
+
+routes.post('/help-orders/:order/answer', HelpOrderController.answerOrder);
+routes.get('/help-orders/unanswered', HelpOrderController.unansweredOrders);
 
 routes.post('/students', StudentsController.store);
 routes.put('/students/:id', StudentsController.updade);
